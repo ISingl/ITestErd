@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Erd
+namespace ErdDevice
 {
     public class Erd
     {
@@ -26,18 +26,29 @@ namespace Erd
             Community = community;
         }
 
-        public int GetMonitorVoltageSignal()
+        public string GetMonitorVoltageSignal()
         {
-            return Convert.ToInt32(GetDataSnrERD(oidMonitorVoltageSignal));
-        }
-        public int GetVoltageSensorContact10()
-        {
-            return Convert.ToInt32(GetDataSnrERD(oidVoltageSensorContact10));
+            switch (Convert.ToInt32(GetDataSnrERD(oidMonitorVoltageSignal)))
+            {
+                case 1: return "voltageIsNo";
+                case 2: return "voltageIsYes";
+                default: return "Error";
+            }
         }
 
-        public int GetTestFlag()
+        public double GetVoltageSensorContact10()
         {
-            return Convert.ToInt32(GetDataSnrERD(oidTestFlag));
+            return Convert.ToDouble(GetDataSnrERD(oidVoltageSensorContact10)) / 100;
+        }
+
+        public string GetTestFlag()
+        {
+            switch (Convert.ToInt32(GetDataSnrERD(oidTestFlag)))
+            {
+                case 0: return "off";
+                case 1: return "on";
+                default: return "Error";
+            }
         }
         public void SetTestFlag(int testFlag)
         {
